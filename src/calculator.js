@@ -1,53 +1,68 @@
-import React, {useState} from 'react'
+import React, { Component } from 'react'
 
-const Call = () => {
-    const [result, setResult] = useState("");
-    const handleClick = (event) => {
-        setResult(result.concat(event.target.name));
+export class Calculator extends Component {
+  constructor(){
+    super();
+    this.state={
+      num1:'',
+      num2:'',
+      total:''
     }
-    const clear = () => {
-        setResult("")
-
+  }
+  handlle1 = (event) => {
+    this.setState({num1:event.target.value})
+  }
+  handlle2 = (event) => {
+    this.setState({num2:event.target.value})
+  }
+  click = (event) => {
+    // console.log(event.target.name == "+");
+    if(event.target.name === "+"){
+      this.setState({      
+        total:parseInt(this.state.num1)+parseInt(this.state.num2)
+    })
     }
-    const backspace = () => {
-        setResult(result.slice(0, -1)) //result.length - 1
+    else if (event.target.name === "-") {
+      this.setState({      
+        total:parseInt(this.state.num1)-parseInt(this.state.num2)
+    })
     }
-    const calculate = () => {
-        try {
-            setResult(eval(result).tostring())
-        } catch(err) {
-            setResult("Error")
-        }
-        
+    else if (event.target.name === "*") {
+      this.setState({      
+        total:parseInt(this.state.num1)*parseInt(this.state.num2)
+    })
     }
+    else if (event.target.name === "/") {
+      this.setState({      
+        total:parseInt(this.state.num1)/parseInt(this.state.num2)
+    })
+    }
+    
+  }
+  render() {
     return (
+      <div className="main">
         <div className="container">
-            <form>
-                <input type="text" value={result}/>
-            </form>
-            <div className="keypad">
-                <button className="highlight" onClick={clear} id="clear">Clear</button>
-                <button className="highlight" onClick={backspace} id="backspace">C</button>
-                <button className="highlight" name="/" onClick={handleClick}>&divide;</button>
-                <button name="7" onClick={handleClick}>7</button>
-                <button name="8" onClick={handleClick}>8</button>
-                <button name="9" onClick={handleClick}>9</button>
-                <button className="highlight" name="*" onClick={handleClick}>&times;</button>
-                <button name="4" onClick={handleClick}>4</button>
-                <button name="5" onClick={handleClick}>5</button>
-                <button name="6" onClick={handleClick}>6</button>
-                <button className="highlight" name="-" onClick={handleClick}>&ndash;</button>
-                <button name="1" onClick={handleClick}>1</button>
-                <button name="2" onClick={handleClick}>2</button>
-                <button name="3" onClick={handleClick}>3</button>
-                <button className="highlight" name="+" onClick={handleClick}>+</button>
-                <button name="0" onClick={handleClick}>0</button>
-                <button className="highlight" name="." onClick={handleClick}>.</button>
-                <button className="highlight" onClick={calculate} id="result">=</button>
-            </div>
-            
+            <h1>Calculator APP </h1>
+        <form>
+          <input type="text" value={this.state.num1} onChange={this.handlle1}/>
+          <input type="text" value={this.state.num2} onChange={this.handlle2}/>
+        </form>
+        
+        <div className="buttons">
+        <button name="+" type="submit" onClick={this.click}>+</button>
+        <button name="-" type="submit" onClick={this.click}>&ndash;</button>
+        <button name="*" type="submit" onClick={this.click}>&times;</button>
+        <button name="/" type="submit" onClick={this.click}>&divide;</button>
         </div>
+        <h1>Result:{this.state.total}</h1>
+        </div>
+        
+        
+        
+      </div>
     )
+  }
 }
 
-export default Call;
+export default Calculator;

@@ -5,14 +5,14 @@ const Call = () => {
     const handleClick = (event) => {
         setResult(result.concat(event.target.name));
     }
-    const clear = (event) => {
+    const clear = () => {
         setResult("")
 
     }
-    const backspace = (event) => {
+    const backspace = () => {
         setResult(result.slice(0, -1)) //result.length - 1
     }
-    const calculate = (event) => {
+    const calculate = () => {
         try {
             setResult(eval(result).tostring())
         } catch(err) {
